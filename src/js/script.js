@@ -35,7 +35,26 @@
     }
   }
 
+  /*function initActions() {
+    const thisBook = this;
+    const favoriteBooks = []
+
+    const booksImages = document.querySelectorAll(select.booksImages.images);
+    for(let image of booksImages){
+      //console.log('image', image);
+      image.addEventListener('dbclick', function(event){
+        event.preventDefault();
+        image.classList.add('favorite');
+        const idBook = image.getAttribute('data-id');
+        favoriteBooks.push(idBook);
+      })
+    }
+    console.log('favoriteBooks', favoriteBooks);
+  }
+  // wywołanie funkcji
+  */
   render();
+  //initActions();
  
 
 }
