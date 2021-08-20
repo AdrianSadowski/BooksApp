@@ -45,7 +45,6 @@
     initActions() {
       const thisBook = this;
       const favoriteBooks = [];
-      //const bookListContainer = document.querySelector(select.containerOf.booksList);
       const booksImages = document.querySelectorAll(select.containerOf.images);
       for(let image of booksImages){
         //console.log('image', image);
