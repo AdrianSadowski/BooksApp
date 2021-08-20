@@ -6,11 +6,10 @@
       bookTemplate: '#template-book',
     },
     containerOf: {
-      booksList: '.books-list',
+      booksList: '.books-list', 
+      images: '.book__image',
+      
     },
-    booksImages: {
-      images: '.books-list .book__image',
-    }
   };
   const templates = {
     bookTemplate: Handlebars.compile(document.querySelector(select.templateOf.bookTemplate).innerHTML),
@@ -18,16 +17,16 @@
 
 
   function render() {
-    const thisBook = this;
+    //const thisBook = this;
 
     for (let eachBook of dataSource.books){
       const generatedHTML = templates.bookTemplate(eachBook);
       
-      // element dom na podstawie kodu HTML
+      // element dom from html
       const element = utils.createDOMFromHTML(generatedHTML);
       //console.log ('element:', element);
 
-      // wygenerowany element dołącz jako nowe dziecko do list .books-list
+      // genedated DOM add to list .books-list as new child
       const bookListContainer = document.querySelector(select.containerOf.booksList);
       //console.log('bookListContainer:', bookListContainer);
 
@@ -35,26 +34,28 @@
     }
   }
 
-  /*function initActions() {
+  function initActions() {
     const thisBook = this;
-    const favoriteBooks = []
+    const favoriteBooks = [];
 
-    const booksImages = document.querySelectorAll(select.booksImages.images);
+    const booksImages = document.querySelectorAll(select.containerOf.images);
     for(let image of booksImages){
       //console.log('image', image);
-      image.addEventListener('dbclick', function(event){
+      image.addEventListener('click', function(event){
         event.preventDefault();
         image.classList.add('favorite');
-        const idBook = image.getAttribute('data-id');
+        const idBook = thisBook.booksList.getAttribute('data-id');
         favoriteBooks.push(idBook);
-      })
+      });
     }
+    
     console.log('favoriteBooks', favoriteBooks);
+    console.log('select.booksImages.images', booksImages);
   }
   // wywołanie funkcji
-  */
+  
   render();
-  //initActions();
+  initActions();
  
 
 }
