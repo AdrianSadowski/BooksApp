@@ -34,6 +34,7 @@
       thisBook.getElements();
       thisBook.render();
       thisBook.initActions();
+      thisBook.determineRatingBgc();
 
       
       
@@ -62,7 +63,10 @@
 
       for (let eachBook of dataSource.books){
         const generatedHTML = templates.bookTemplate(eachBook);
-        
+        eachBook.ratingBgc = thisBook.determineRatingBgc(eachBook.rating);
+        eachBook.ratingWidth = eachBook.rating * 10;
+        console.log(eachBook.ratingWidth);
+        console.log(eachBook.ratingBgc);
         // element dom from html
         const element = utils.createDOMFromHTML(generatedHTML);
         //console.log ('element:', element);
@@ -97,6 +101,14 @@
 
       }
     }
+    determineRatingBgc(rating) {
+      let background = '';
+      if (rating <= 6) background = 'linear-gradient(to bottom,  #fefcea 0%, #f1da36 100%);';
+      else if (rating > 6 && rating <=8) background = 'linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%);';
+      else if (rating > 8 && rating <= 0) background = 'linear-gradient(to bottom, #299a0b 0%, #299a0b 100%);';
+      else if (rating >9 ) background = 'linear-gradient(to bottom, #ff0084 0%,#ff0084 100%);';
+      return background;
+    }
 
     initActions() {
       const thisBook = this;
@@ -105,19 +117,19 @@
       thisBook.menuContainer.addEventListener('dblclick', function (event) {
         event.preventDefault();
 
-        const elem = event.target.offsetParent;
+        const element = event.target.offsetParent;
         //console.log(elem);
-        if (elem.classList.contains(select.book.image)) {
+        if (element.classList.contains(select.book.image)) {
           // console.log(select.book.image);
-          const id = elem.getAttribute('data-id');
+          const id = element.getAttribute('data-id');
 
           if (thisBook.favoriteBooks.includes(id)) {
             const indexOfBookID = thisBook.favoriteBooks.indexOf(id);
-            elem.classList.remove(classNames.favoriteBook);
+            element.classList.remove(classNames.favoriteBook);
             thisBook.favoriteBooks.splice(indexOfBookID, 1);
           }
           else {
-            elem.classList.add(classNames.favoriteBook);
+            element.classList.add(classNames.favoriteBook);
             thisBook.favoriteBooks.push(id);
           }
         }
@@ -125,10 +137,10 @@
 
       thisBook.formHtmlFiltered.addEventListener('change', function (event) {
         event.preventDefault();
-        const elem = event.target;
-        if (elem.type === 'chechbox') {
-          if (elem.checked){
-            thisBook.filters.push(elem.value);
+        const element = event.target;
+        if (element.type === 'chechbox') {
+          if (element.checked){
+            thisBook.filters.push(element.value);
             //console.log('thisBook.filters', thisBook.filters);
           } else {
             const indexOfFilter = thisBook.filters.indexOf(elem.value);
@@ -146,6 +158,5 @@
 
 // eslint-disable-next-line no-unused-vars
 const app = new BookList();
-
 
 }
