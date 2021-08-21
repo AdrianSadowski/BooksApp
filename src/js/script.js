@@ -143,7 +143,7 @@
             thisBook.filters.push(element.value);
             //console.log('thisBook.filters', thisBook.filters);
           } else {
-            const indexOfFilter = thisBook.filters.indexOf(elem.value);
+            const indexOfFilter = thisBook.filters.indexOf(element.value);
             thisBook.filters.splice(indexOfFilter, 1);
           }
         }
