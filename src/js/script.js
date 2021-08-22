@@ -41,9 +41,7 @@
     }
 
     initData() {
-      const thisBook = this;
-
-      thisBook.data = dataSource.books;
+      this.data = dataSource.books;
     }
 
     getElements() {
@@ -61,12 +59,12 @@
     render() {
       const thisBook = this;
 
-      for (let eachBook of dataSource.books){
+      for (let eachBook of this.data){
         const generatedHTML = templates.bookTemplate(eachBook);
         eachBook.ratingBgc = thisBook.determineRatingBgc(eachBook.rating);
         eachBook.ratingWidth = eachBook.rating * 10;
-        console.log(eachBook.ratingWidth);
-        console.log(eachBook.ratingBgc);
+        //console.log(eachBook.ratingWidth);
+        //console.log(eachBook.ratingBgc);
         // element dom from html
         const element = utils.createDOMFromHTML(generatedHTML);
         //console.log ('element:', element);
@@ -82,7 +80,7 @@
     filterBooks(){
       const thisBook = this;
 
-      for (let eachBook of thisBook.data) {
+      for (let eachBook of this.data) {
         let shoultBeHidden = false;
 
         for(let filter of thisBook.filters){
@@ -100,14 +98,6 @@
         }
 
       }
-    }
-    determineRatingBgc(rating) {
-      let background = '';
-      if (rating <= 6) background = 'linear-gradient(to bottom,  #fefcea 0%, #f1da36 100%);';
-      else if (rating > 6 && rating <=8) background = 'linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%);';
-      else if (rating > 8 && rating <= 0) background = 'linear-gradient(to bottom, #299a0b 0%, #299a0b 100%);';
-      else if (rating >9 ) background = 'linear-gradient(to bottom, #ff0084 0%,#ff0084 100%);';
-      return background;
     }
 
     initActions() {
@@ -152,6 +142,14 @@
       });
       
       //console.log('favoriteBooks', thisBook.favoriteBooks);
+    }
+    determineRatingBgc(rating) {
+      let background = '';
+      if (rating <= 6) background = 'linear-gradient(to bottom,  #fefcea 0%, #f1da36 100%);';
+      else if (rating > 6 && rating <=8) background = 'linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%);';
+      else if (rating > 8 && rating <= 0) background = 'linear-gradient(to bottom, #299a0b 0%, #299a0b 100%);';
+      else if (rating >9 ) background = 'linear-gradient(to bottom, #ff0084 0%,#ff0084 100%);';
+      return background;
     }
  
   }
