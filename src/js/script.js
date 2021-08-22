@@ -25,23 +25,22 @@
     bookTemplate: Handlebars.compile(document.querySelector(select.templateOf.bookTemplate).innerHTML),
   };
 
-  class BookList{
+  class BookList {
 
-    constructor (){
+    constructor() {
       const thisBook = this;
 
       thisBook.initData();
       thisBook.getElements();
       thisBook.render();
       thisBook.initActions();
-      thisBook.determineRatingBgc();
-
-      
-      
     }
 
     initData() {
-      this.data = dataSource.books;
+      const thisBook = this;
+      thisBook.data = dataSource.books;
+      thisBook.favoriteBooks = [];
+      thisBook.filters = [];
     }
 
     getElements() {
@@ -49,20 +48,18 @@
 
       thisBook.menuContainer = document.querySelector(select.containerOf.booksList);
       thisBook.formHtmlFiltered = document.querySelector(select.containerOf.form);
-      
-      thisBook.favoriteBooks = [];
-      thisBook.filters = [];
-
-
 
     }
     render() {
       const thisBook = this;
 
-      for (let eachBook of this.data){
-        const generatedHTML = templates.bookTemplate(eachBook);
+      for (let eachBook of this.data) {
+       
         eachBook.ratingBgc = thisBook.determineRatingBgc(eachBook.rating);
+        console.log(eachBook);
         eachBook.ratingWidth = eachBook.rating * 10;
+
+        const generatedHTML = templates.bookTemplate(eachBook);
         //console.log(eachBook.ratingWidth);
         //console.log(eachBook.ratingBgc);
         // element dom from html
@@ -77,14 +74,17 @@
       }
     }
 
-    filterBooks(){
+    filterBooks() {
       const thisBook = this;
 
-      for (let eachBook of this.data) {
+      console.log(thisBook.data);
+      console.log(thisBook.filters);
+
+      for (let eachBook of thisBook.data) {
         let shoultBeHidden = false;
 
-        for(let filter of thisBook.filters){
-          if(!eachBook.details[filter]){
+        for (let filter of thisBook.filters) {
+          if (!eachBook.details[filter]) {
             shoultBeHidden = true;
             break;
           }
@@ -102,7 +102,7 @@
 
     initActions() {
       const thisBook = this;
-  
+
 
       thisBook.menuContainer.addEventListener('dblclick', function (event) {
         event.preventDefault();
@@ -128,8 +128,8 @@
       thisBook.formHtmlFiltered.addEventListener('change', function (event) {
         event.preventDefault();
         const element = event.target;
-        if (element.type === 'chechbox') {
-          if (element.checked){
+        if (element.type === 'checkbox') {
+          if (element.checked) {
             thisBook.filters.push(element.value);
             //console.log('thisBook.filters', thisBook.filters);
           } else {
@@ -138,23 +138,23 @@
           }
         }
         thisBook.filterBooks();
-        
+
       });
-      
+
       //console.log('favoriteBooks', thisBook.favoriteBooks);
     }
     determineRatingBgc(rating) {
       let background = '';
       if (rating <= 6) background = 'linear-gradient(to bottom,  #fefcea 0%, #f1da36 100%);';
-      else if (rating > 6 && rating <=8) background = 'linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%);';
+      else if (rating > 6 && rating <= 8) background = 'linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%);';
       else if (rating > 8 && rating <= 0) background = 'linear-gradient(to bottom, #299a0b 0%, #299a0b 100%);';
-      else if (rating >9 ) background = 'linear-gradient(to bottom, #ff0084 0%,#ff0084 100%);';
+      else if (rating > 9) background = 'linear-gradient(to bottom, #ff0084 0%,#ff0084 100%);';
       return background;
     }
- 
+
   }
 
-// eslint-disable-next-line no-unused-vars
-const app = new BookList();
+  // eslint-disable-next-line no-unused-vars
+  const app = new BookList();
 
 }
